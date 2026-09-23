@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ayush Verma (aayu258) · GitHub</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --fg: #e6edf3;
+      --muted: #7d8590;
+      --border: #30363d;
+      --surface: #0d1117;
+      --hover: #21262d;
+      --active: #161b22;
+      --link: #58a6ff;
+      --header-bg: rgba(13, 17, 23, 0.95);
+      --badge-bg: #21262d;
+      --accent-grad: linear-gradient(135deg, #238636, #1f6feb);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
+        Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.5;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: auto;
+      background: var(--surface);
+      color: var(--fg);
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      z-index: 100;
+    }
+
+    .skip-link:focus {
+      left: 8px;
+      top: 8px;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .logo:hover {
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-grad);
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .nav {
+      display: flex;
+      gap: 4px;
+      margin-left: 8px;
+      overflow: auto;
+      scrollbar-width: none;
+    }
+
+    .nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav a {
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .nav a:hover {
+      background: var(--hover);
+      color: var(--fg);
+      text-decoration: none;
+    }
+
+    .nav a.active {
+      color: var(--fg);
+      font-weight: 600;
+      background: var(--active);
+    }
+
+    .badge {
+      margin-left: 6px;
+      background: var(--badge-bg);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 1px 7px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .header-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 10px;
+      min-width: 220px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .search input {
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--fg);
+      width: 100%;
+      font: inherit;
+    }
+
+    .avatar-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--accent-grad);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 16px 64px;
+      display: grid;
+      grid-template-columns: 296px minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    .profile {
+      min-width: 0;
+    }
+
+    .avatar-large {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: var(--accent-grad);
+      display: grid;
+      place-items: center;
+      font-size: 56px;
+      font-weight: 800;
+      color: white;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+      user-select: none;
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 26px;
+      line-height: 1.25;
+    }
+
+    .username {
+      color: var(--muted);
+      font-size: 20px;
+      margin: 0 0 16px;
+      font-weight: 300;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--hover);
+      color: var(--fg);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn:hover {
+      background: #30363d;
+    }
+
+    .btn.primary {
+      background: #238636;
+      border-color: #2ea043;
+      color: white;
+    }
+
+    .btn.primary:hover {
+      background: #2ea043;
+    }
+
+    .meta {
+      list-style: none;
+      margin: 0 0 16px;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    .stats strong {
+      color: var(--fg);
+    }
+
+    .main {
+      display: grid;
+      gap: 24px;
+      min-width: 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .section-head a {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .repo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .repo-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 132px;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .repo-card:hover {
+      border-color: #8b949e;
+      transform: translateY(-1px);
+    }
+
+    .repo-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .repo-title a {
+      color: var(--link);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .repo-title a:hover {
+      text-decoration: underline;
+    }
+
+    .visibility {
+      font-size: 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0 7px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      flex: 1;
+    }
+
+    .repo-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+
+    .lang {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .python {
+      background: #3572a5;
+    }
+
+    .jupyter {
+      background: #da5b0b;
+    }
+
+    .graph-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      padding: 16px;
+    }
+
+    .graph-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .graph-header h2 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .graph-header p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .months {
+      display: flex;
+      justify-content: space-between;
+      padding-left: 50px;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      min-width: 900px;
+    }
+
+    .graph-scroll {
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .graph {
+      display: grid;
+      grid-template-columns: 42px auto;
+      gap: 8px;
+      min-width: 900px;
+    }
+
+    .days {
+      display: grid;
+      grid-template-rows: repeat(7, 13px);
+      gap: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      align-items: center;
+    }
+
+    .cells {
+      display: grid;
+      grid-template-columns: repeat(53, 13px);
+      grid-auto-rows: 13px;
+      gap: 3px;
+    }
+
+    .cell {
+      width: 13px;
+      height: 13px;
+      border-radius: 2px;
+      background: #161b22;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      display: inline-block;
+    }
+
+    .cell.l1 {
+      background: #0e4429;
+    }
+
+    .cell.l2 {
+      background: #006d32;
+    }
+
+    .cell.l3 {
+      background: #26a641;
+    }
+
+    .cell.l4 {
+      background: #39d353;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      flex-wrap: wrap;
+    }
+
+    .legend .cell {
+      width: 10px;
+      height: 10px;
+    }
+
+    .activity {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      padding: 16px;
+    }
+
+    .activity h2 {
+      margin: 0 0 4px;
+      font-size: 16px;
+    }
+
+    .activity h3 {
+      margin: 0 0 12px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .activity-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .activity-item {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      align-items: start;
+      font-size: 13px;
+    }
+
+    .activity-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(31, 111, 235, 0.13);
+      color: #58a6ff;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      border: 1px solid rgba(31, 111, 235, 0.35);
+    }
+
+    .activity-item a {
+      color: var(--link);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .activity-item a:hover {
+      text-decoration: underline;
+    }
+
+    .activity-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      margin-top: 32px;
+      padding: 24px 16px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: space-between;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .footer a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: var(--fg);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .avatar-large {
+        width: 128px;
+        height: 128px;
+        font-size: 42px;
+      }
+
+      .search {
+        display: none;
+      }
+
+      .header-inner {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px 16px;
+      }
+
+      .nav {
+        order: 3;
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .header-right {
+        margin-left: auto;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .actions {
+        grid-template-columns: 1fr;
+      }
+
+      .repo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="header" role="banner">
+    <div class="header-inner">
+      <a class="logo" href="#">
+        <span class="logo-mark" aria-hidden="true">GH</span>
+        <span>GitHub</span>
+      </a>
+
+      <nav class="nav" aria-label="User navigation">
+        <a class="active" href="#">Overview</a>
+        <a href="#">Repositories <span class="badge">4</span></a>
+        <a href="#">Projects</a>
+        <a href="#">Packages</a>
+        <a href="#">Stars</a>
+      </nav>
+
+      <div class="header-right">
+        <label class="search">
+          <span aria-hidden="true">🔍</span>
+          <input type="search" placeholder="Search or jump to…" aria-label="Search or jump to" />
+        </label>
+        <button class="avatar-btn" aria-label="Open user menu">AV</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container" id="main-content">
+    <aside class="profile">
+      <div class="avatar-large" aria-hidden="true">AV</div>
+
+      <h1>Ayush Verma</h1>
+      <p class="username">aayu258</p>
+
+      <div class="actions">
+        <button class="btn primary">Follow</button>
+        <button class="btn">Message</button>
+      </div>
+
+      <ul class="meta">
+        <li>
+          <a href="mailto:aaayushaaavermaaa258@gmail.com">
+            aaayushaaavermaaa258@gmail.com
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.linkedin.com/in/ayush-verma-8b5a3034a"
+            target="_blank"
+            rel="noreferrer"
+          >
+            linkedin.com/in/ayush-verma-8b5a3034a
+          </a>
+        </li>
+      </ul>
+
+      <div class="stats">
+        <span><strong>4</strong> repositories</span>
+        <span><strong>14</strong> contributions in the last year</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section aria-labelledby="pinned-heading">
+        <div class="section-head">
+          <h2 id="pinned-heading">Pinned</h2>
+          <a href="#">Customize your pins</a>
+        </div>
+
+        <div class="repo-grid">
+          <article class="repo-card">
+            <div class="repo-title">
+              <a
+                href="https://github.com/aayu258/Admission_Process_oops_Project"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Admission_Process_oops_Project
+              </a>
+              <span class="visibility">Public</span>
+            </div>
+            <p class="desc">
+              Python project for admission process using object-oriented
+              programming concepts.
+            </p>
+            <div class="repo-meta">
+              <span class="lang">
+                <i class="dot python" aria-hidden="true"></i>
+                Python
+              </span>
+            </div>
+          </article>
+
+          <article class="repo-card">
+            <div class="repo-title">
+              <a
+                href="https://github.com/aayu258/File_Handling_Project"
+                target="_blank"
+                rel="noreferrer"
+              >
+                File_Handling_Project
+              </a>
+              <span class="visibility">Public</span>
+            </div>
+            <p class="desc">
+              Python project demonstrating file handling operations.
+            </p>
+            <div class="repo-meta">
+              <span class="lang">
+                <i class="dot python" aria-hidden="true"></i>
+                Python
+              </span>
+            </div>
+          </article>
+
+          <article class="repo-card">
+            <div class="repo-title">
+              <a
+                href="https://github.com/aayu258/First_Machine_Learning_project"
+                target="_blank"
+                rel="noreferrer"
+              >
+                First_Machine_Learning_project
+              </a>
+              <span class="visibility">Public</span>
+            </div>
+            <p class="desc">
+              Machine Learning project for predicting used car prices using
+              Python, Pandas, Scikit-learn, and regression techniques.
+            </p>
+            <div class="repo-meta">
+              <span class="lang">
+                <i class="dot jupyter" aria-hidden="true"></i>
+                Jupyter Notebook
+              </span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="graph-card" aria-labelledby="graph-heading">
+        <div class="graph-header">
+          <div>
+            <h2 id="graph-heading">14 contributions in the last year</h2>
+            <p>Learn how we count contributions</p>
+          </div>
+        </div>
+
+        <div class="months" aria-hidden="true">
+          <span>Sep</span>
+          <span>Oct</span>
+          <span>Nov</span>
+          <span>Dec</span>
+          <span>Jan</span>
+          <span>Feb</span>
+          <span>Mar</span>
+          <span>Apr</span>
+          <span>May</span>
+          <span>Jun</span>
+          <span>Jul</span>
+          <span>Aug</span>
+          <span>Sep</span>
+        </div>
+
+        <div class="graph-scroll">
+          <div class="graph">
+            <div class="days" aria-hidden="true">
+              <span>Sun</span>
+              <span>Mon</span>
+              <span>Tue</span>
+              <span>Wed</span>
+              <span>Thu</span>
+              <span>Fri</span>
+              <span>Sat</span>
+            </div>
+
+            <div class="cells" id="contribCells" aria-label="Contribution graph"></div>
+          </div>
+        </div>
+
+        <div class="legend" aria-label="Contribution level legend">
+          <span>Less</span>
+          <span class="cell" aria-hidden="true"></span>
+          <span class="cell l1" aria-hidden="true"></span>
+          <span class="cell l2" aria-hidden="true"></span>
+          <span class="cell l3" aria-hidden="true"></span>
+          <span class="cell l4" aria-hidden="true"></span>
+          <span>More</span>
+        </div>
+      </section>
+
+      <section class="activity" aria-labelledby="activity-heading">
+        <h2 id="activity-heading">Contribution activity</h2>
+        <h3>September 2026</h3>
+
+        <ul class="activity-list">
+          <li class="activity-item">
+            <span class="activity-icon" aria-hidden="true">⬆</span>
+            <div>
+              <a
+                href="https://github.com/aayu258/Admission_Process_oops_Project"
+                target="_blank"
+                rel="noreferrer"
+              >
+                aayu258/Admission_Process_oops_Project
+              </a>
+              <span>3 commits</span>
+            </div>
+          </li>
+
+          <li class="activity-item">
+            <span class="activity-icon" aria-hidden="true">⬆</span>
+            <div>
+              <a
+                href="https://github.com/aayu258/First_Machine_Learning_project"
+                target="_blank"
+                rel="noreferrer"
+              >
+                aayu258/First_Machine_Learning_project
+              </a>
+              <span>1 commit</span>
+            </div>
+          </li>
+
+          <li class="activity-item">
+            <span class="activity-icon" aria-hidden="true">⬆</span>
+            <div>
+              <a
+                href="https://github.com/aayu258/File_Handling_Project"
+                target="_blank"
+                rel="noreferrer"
+              >
+                aayu258/File_Handling_Project
+              </a>
+              <span>1 commit</span>
+            </div>
+          </li>
+
+          <li class="activity-item">
+            <span class="activity-icon" aria-hidden="true">＋</span>
+            <div>
+              <a href="https://github.com/aayu258/Ayush-Verma" target="_blank" rel="noreferrer">
+                aayu258/Ayush-Verma
+              </a>
+              <div class="activity-note">This contribution was made on Sep 21</div>
+            </div>
+          </li>
+
+          <li class="activity-item">
+            <span class="activity-icon" aria-hidden="true">📓</span>
+            <div>
+              <a
+                href="https://github.com/aayu258/First_Machine_Learning_project"
+                target="_blank"
+                rel="noreferrer"
+              >
+                aayu258/First_Machine_Learning_project
+              </a>
+              <div class="activity-note">Jupyter Notebook</div>
+              <div class="activity-note">This contribution was made on Sep 21</div>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 GitHub, Inc.</span>
+
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Security</a>
+        <a href="#">Status</a>
+        <a href="#">Community</a>
+        <a href="#">Docs</a>
+        <a href="#">Contact</a>
+        <a href="#">Manage cookies</a>
+        <a href="#">Do not share my personal information</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const cellsContainer = document.getElementById("contribCells");
+      if (!cellsContainer) return;
+
+      const weeks = 53;
+      const days = 7;
+      const totalCells = weeks * days;
+
+      const levels = new Array(totalCells).fill(0);
+
+      const setLevel = (day, week, level) => {
+        levels[day * weeks + week] = level;
+      };
+
+      // Static sample contribution pattern for the latest two weeks.
+      // This creates 14 visible contribution squares.
+      setLevel(0, 52, 1);
+      setLevel(1, 52, 3);
+      setLevel(2, 52, 2);
+      setLevel(3, 52, 1);
+      setLevel(4, 52, 2);
+      setLevel(5, 52, 1);
+      setLevel(6, 52, 3);
+
+      setLevel(0, 51, 1);
+      setLevel(1, 51, 2);
+      setLevel(2, 51, 1);
+      setLevel(3, 51, 1);
+      setLevel(4, 51, 1);
+      setLevel(5, 51, 1);
+      setLevel(6, 51, 1);
+
+      for (let i = 0; i < totalCells; i++) {
+        const cell = document.createElement("span");
+        cell.className = "cell";
+
+        if (levels[i] > 0) {
+          cell.classList.add("l" + levels[i]);
+          cell.setAttribute("aria-label", "Contribution level " + levels[i]);
+        } else {
+          cell.setAttribute("aria-label", "No contributions");
+        }
+
+        cellsContainer.appendChild(cell);
+      }
+    })();
+  </script>
+</body>
+</html>
